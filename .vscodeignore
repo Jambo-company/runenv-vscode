@@ -1,0 +1,15 @@
+.vscode/**
+node_modules/**
+src/**
+test/**
+RELEASE_CHECKLIST.md
+IMPLEMENTATION_SUMMARY.md
+IMPLEMENTATION_SUMMARY_KO.md
+RELEASE_CHECKLIST_KO.md
+check_l10n_sync.js
+todo.md
+tsconfig.json
+*.vsix
+.gitignore
+**/*.ts
+**/*.map

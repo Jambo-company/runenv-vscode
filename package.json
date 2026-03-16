@@ -1,0 +1,317 @@
+{
+  "name": "runenv",
+  "displayName": "RunEnv",
+  "description": "Inject secrets into all terminals at runtime — zero-disk secret management",
+  "version": "0.2.1",
+  "publisher": "JamboTeam",
+  "license": "MIT",
+  "homepage": "https://runenv.dev",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "galleryBanner": {
+    "color": "#1a1a2e",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/github/stars/Jambo-company/runenv?style=social",
+      "href": "https://github.com/Jambo-company/runenv",
+      "description": "GitHub Stars"
+    }
+  ],
+  "keywords": [
+    "env",
+    "secrets",
+    "environment variables",
+    "dotenv",
+    "devops",
+    "secret management",
+    "zero-disk"
+  ],
+  "icon": "runenv-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jambo-company/runenv-vscode"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "runenv.quickStart",
+        "title": "%command.quickStart.title%"
+      },
+      {
+        "command": "runenv.openHome",
+        "title": "%command.openHome.title%"
+      },
+      {
+        "command": "runenv.login",
+        "title": "%command.login.title%"
+      },
+      {
+        "command": "runenv.logout",
+        "title": "%command.logout.title%"
+      },
+      {
+        "command": "runenv.init",
+        "title": "%command.init.title%"
+      },
+      {
+        "command": "runenv.loadSecrets",
+        "title": "%command.loadSecrets.title%"
+      },
+      {
+        "command": "runenv.run",
+        "title": "%command.run.title%"
+      },
+      {
+        "command": "runenv.openTerminal",
+        "title": "%command.openTerminal.title%"
+      },
+      {
+        "command": "runenv.switchEnv",
+        "title": "%command.switchEnv.title%"
+      },
+      {
+        "command": "runenv.viewSecrets",
+        "title": "%command.viewSecrets.title%"
+      },
+      {
+        "command": "runenv.unload",
+        "title": "%command.unload.title%"
+      },
+      {
+        "command": "runenv.wrapScripts",
+        "title": "%command.wrapScripts.title%"
+      },
+      {
+        "command": "runenv.importEnv",
+        "title": "%command.importEnv.title%"
+      },
+      {
+        "command": "runenv.generateDotenv",
+        "title": "%command.generateDotenv.title%"
+      },
+      {
+        "command": "runenv.applyRecommendedPreset",
+        "title": "%command.applyRecommendedPreset.title%"
+      },
+      {
+        "command": "runenv.openProjectConfig",
+        "title": "%command.openProjectConfig.title%"
+      },
+      {
+        "command": "runenv.openReadme",
+        "title": "%command.openReadme.title%"
+      },
+      {
+        "command": "runenv.doctor",
+        "title": "%command.doctor.title%"
+      },
+      {
+        "command": "runenv.smokeChecklist",
+        "title": "%command.smokeChecklist.title%"
+      },
+      {
+        "command": "runenv.openDashboard",
+        "title": "%command.openDashboard.title%"
+      },
+      {
+        "command": "runenv.openSettings",
+        "title": "%command.openSettings.title%"
+      },
+      {
+        "command": "runenv.setupFlutterDebug",
+        "title": "%command.setupFlutterDebug.title%"
+      },
+      {
+        "command": "runenv.status",
+        "title": "%command.status.title%"
+      },
+      {
+        "command": "runenv.refreshTree",
+        "title": "%command.refreshTree.title%",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "runenv",
+          "title": "RunEnv",
+          "icon": "resources/runenv-sidebar.svg"
+        }
+      ]
+    },
+    "views": {
+      "runenv": [
+        {
+          "id": "runenvHome",
+          "name": "Home"
+        },
+        {
+          "id": "runenvSecrets",
+          "name": "Secrets"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "runenvSecrets",
+        "contents": "Secrets is a read-only view. Use Home to sign in and connect this folder first.\n[Open Home](command:runenv.openHome)\n[Quick Start](command:runenv.quickStart)",
+        "when": "!runenv.loggedIn"
+      },
+      {
+        "view": "runenvSecrets",
+        "contents": "Secrets is ready after this folder is connected. Finish setup from Home.\n[Open Home](command:runenv.openHome)\n[Quick Start](command:runenv.quickStart)",
+        "when": "runenv.loggedIn && !runenv.projectConfigured"
+      },
+      {
+        "view": "runenvSecrets",
+        "contents": "Load secrets from Home to populate the Secrets view.\n[Open Home](command:runenv.openHome)\n[Load Secrets](command:runenv.loadSecrets)",
+        "when": "runenv.loggedIn && runenv.projectConfigured && !runenv.secretsLoaded"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "runenv.gettingStarted",
+        "title": "Get Started with RunEnv",
+        "description": "Open Home, finish setup, and optionally migrate existing `.env` files.",
+        "steps": [
+          {
+            "id": "login",
+            "title": "Sign in",
+            "description": "Open [RunEnv: Open Home](command:runenv.openHome) for the main workspace surface, then use [RunEnv: Login](command:runenv.login) or [RunEnv: Quick Start](command:runenv.quickStart) to authenticate in your browser.",
+            "completionEvents": [
+              "onCommand:runenv.login",
+              "onCommand:runenv.quickStart"
+            ]
+          },
+          {
+            "id": "init",
+            "title": "Connect this folder",
+            "description": "Use Home or run [RunEnv: Init Project](command:runenv.init) to choose the project, environment, and preset for this workspace.",
+            "completionEvents": [
+              "onCommand:runenv.init"
+            ]
+          },
+          {
+            "id": "load",
+            "title": "Load secrets",
+            "description": "Use Home or run [RunEnv: Load Secrets](command:runenv.loadSecrets) to inject environment variables into terminals, tasks, and debug sessions.",
+            "completionEvents": [
+              "onCommand:runenv.loadSecrets"
+            ]
+          },
+          {
+            "id": "import",
+            "title": "Import existing .env files",
+            "description": "If this workspace already has local env files, use Home > Files or run [RunEnv: Import .env File](command:runenv.importEnv) to move those values into RunEnv.",
+            "completionEvents": [
+              "onCommand:runenv.importEnv"
+            ]
+          },
+          {
+            "id": "generate",
+            "title": "Generate a local file when a tool still needs one",
+            "description": "Use Home > Actions (or Home > Advanced) or run [RunEnv: Generate .env File](command:runenv.generateDotenv) for tools like Flutter or React Native that still require a file on disk.",
+            "completionEvents": [
+              "onCommand:runenv.generateDotenv"
+            ]
+          }
+        ]
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "runenv.importEnv",
+          "when": "runenv.activeEditorIsEnvFile",
+          "group": "navigation@1"
+        },
+        {
+          "command": "runenv.applyRecommendedPreset",
+          "when": "(runenv.activeEditorIsEnvFile || runenv.activeEditorIsProjectConfig) && runenv.hasPresetRecommendation",
+          "group": "navigation@2"
+        },
+        {
+          "command": "runenv.loadSecrets",
+          "when": "runenv.activeEditorIsProjectConfig && runenv.projectConfigured && !runenv.secretsLoaded",
+          "group": "navigation@3"
+        },
+        {
+          "command": "runenv.doctor",
+          "when": "runenv.activeEditorIsEnvFile || runenv.activeEditorIsProjectConfig",
+          "group": "navigation@4"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "runenv.refreshTree",
+          "when": "view == runenvHome",
+          "group": "navigation"
+        },
+        {
+          "command": "runenv.refreshTree",
+          "when": "view == runenvSecrets",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "runenv.loadSecrets",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l"
+      },
+      {
+        "command": "runenv.run",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r"
+      }
+    ],
+    "configuration": {
+      "title": "%configuration.title%",
+      "properties": {
+        "runenv.apiUrl": {
+          "type": "string",
+          "default": "https://runenv.dev",
+          "description": "%configuration.apiUrl.description%"
+        },
+        "runenv.refreshInterval": {
+          "type": "number",
+          "default": 15,
+          "minimum": 1,
+          "maximum": 60,
+          "description": "%configuration.refreshInterval.description%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node check_l10n_sync.js && node --test ./test/env-files.test.js ./test/env-file-guidance.test.js ./test/env-file-pickers.test.js ./test/environment-collection.test.js ./test/jsonc.test.js ./test/project-config-context.test.js ./test/runenv-command.test.js ./test/editor-ux.test.js ./test/import-diff.test.js ./test/preview.test.js ./test/setup-progress.test.js ./test/recent-actions.test.js ./test/recent-actions-store.test.js ./test/action-pickers.test.js ./test/project-config-check.test.js ./test/doctor-report.test.js ./test/smoke-checklist.test.js ./test/workspace-context.test.js ./test/workspace-actions.test.js ./test/workspace-ux.test.js ./test/home-tree.test.js ./test/home-tree-state.test.js ./test/home-tree-action-items.test.js ./test/secrets-tree.test.js",
+    "check:l10n": "node check_l10n_sync.js",
+    "package:vsix": "npx --yes @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/l10n-dev": "^0.0.35",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.3.1",
+    "runenv-shared": "file:./runenv-shared"
+  }
+}

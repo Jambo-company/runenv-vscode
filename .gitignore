@@ -1,3 +1,21 @@
+# Build output
 dist/
 node_modules/
+
+# Extension artifacts — never commit binaries
 *.vsix
+release/
+
+# Internal process docs — not for public repo
+IMPLEMENTATION_SUMMARY*.md
+RELEASE_CHECKLIST*.md
+RELEASE_NOTES*.md
+MARKETPLACE_COPY.md
+todo.md
+check_l10n_sync.js
+
+# OS metadata
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
